@@ -16,6 +16,8 @@ app.use(bodyParser.urlencoded({extended: false}));
 mongoose.Promise = Promise;
 app.engine("handlebars", exphbs({defaultLayout: "main"}));
 app.set("view engine", "handlebars");
+mongoose.connect("mongodb://localhost/cheeriomonami");
+var db = mongoose.connection;
 
 var url = "http://www.muscleandfitness.com/athletes-celebrities/news";
 app.get("/", function (req, res) {
