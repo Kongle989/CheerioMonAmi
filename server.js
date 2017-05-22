@@ -18,6 +18,12 @@ app.engine("handlebars", exphbs({defaultLayout: "main"}));
 app.set("view engine", "handlebars");
 mongoose.connect("mongodb://localhost/cheeriomonami");
 var db = mongoose.connection;
+db.on("error", function(error) {
+    console.log("Mongoose Error: ", error);
+});
+db.once("open", function() {
+    console.log("Mongoose connection successful.");
+});
 
 var url = "http://www.muscleandfitness.com/athletes-celebrities/news";
 app.get("/", function (req, res) {
@@ -30,12 +36,16 @@ app.get("/scrape", function (req, res) {
         $(".node__title").each(function (i, element) {
             var title = $(this).children().text().trim(),
                 link = "http://www.muscleandfitness.com" + $(this).children().attr("href");
-            result.push({
-                title: title,
-                link: link
-            });
+            articles.findOneAndUpdate(
+                {title: title},
+                {title: title,
+                link: link},
+                {new: true,
+                upsert: true}, function (up, doc) {
+                if (up) throw up;
+            })
         });
-        res.send(result);
+        res.redirect('/');
     });
 });
 
