@@ -16,36 +16,43 @@ app.use(bodyParser.urlencoded({extended: false}));
 mongoose.Promise = Promise;
 app.engine("handlebars", exphbs({defaultLayout: "main"}));
 app.set("view engine", "handlebars");
+app.use(express.static("public"));
 mongoose.connect("mongodb://localhost/cheeriomonami");
 var db = mongoose.connection;
-db.on("error", function(error) {
+db.on("error", function (error) {
     console.log("Mongoose Error: ", error);
 });
-db.once("open", function() {
+db.once("open", function () {
     console.log("Mongoose connection successful.");
 });
 
 var url = "http://www.muscleandfitness.com/athletes-celebrities/news";
 app.get("/", function (req, res) {
-res.render("index");
+    res.render('index');
 });
 app.get("/scrape", function (req, res) {
     request(url, function (error, response, html) {
-        var result = [];
         var $ = cheerio.load(html);
         $(".node__title").each(function (i, element) {
             var title = $(this).children().text().trim(),
                 link = "http://www.muscleandfitness.com" + $(this).children().attr("href");
             articles.findOneAndUpdate(
                 {title: title},
-                {title: title,
-                link: link},
-                {new: true,
-                upsert: true}, function (up, doc) {
-                if (up) throw up;
-            })
+                {
+                    title: title,
+                    link: link
+                },
+                {
+                    new: true,
+                    upsert: true
+                }, function (up, doc) {
+                    if (up) throw up;
+                })
         });
-        res.redirect('/');
+        articles.find().sort({'createdAt': -1}).limit(15).exec(function (up, doc) {
+            if (up) throw up;
+            else res.render('index', {articles: doc});
+        });
     });
 });
 

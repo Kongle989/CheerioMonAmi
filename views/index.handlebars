@@ -1,6 +1,14 @@
 <h1>News</h1>
-<div id="freshBurgers">
+<div id="articles">
     <form action="/scrape" method="GET">
-        <button type="submit">Get News</button>
+        <button type="submit">Get Latest News</button>
     </form>
+
+        {{#each articles}}
+            <div class="articles">
+                {{this.title}}<br>
+                    <a href={{this.link}}>Read Article</a><br>
+            </div>
+        {{/each}}
+
 </div>
