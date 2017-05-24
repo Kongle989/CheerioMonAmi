@@ -4,11 +4,21 @@
         <button type="submit">Get Latest News</button>
     </form>
 
-        {{#each articles}}
-            <div class="articles">
+    {{#each articles}}
+        <div class="articles">
+
+            <div class="innerArticle" data-id={{this._id}}>
                 {{this.title}}<br>
-                    <a href={{this.link}}>Read Article</a><br>
+                <a href={{this.link}}>Read Article</a><br>
             </div>
-        {{/each}}
+            <div class="buttons">
+                <form method="post">
+                    <button class="save" formaction="/save"><span>Save</span></button>
+                    <button class="delete" formaction="/delete"><span>Delete</span></button>
+                </form>
+            </div>
+
+        </div>
+    {{/each}}
 
 </div>

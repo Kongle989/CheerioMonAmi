@@ -10,10 +10,6 @@ var mongoose = require("mongoose"),
             type: String,
             required: true
         },
-        createdAt: {
-            type: Date,
-            defaultValue: Date.Now
-        },
         // This only saves one note's ObjectId, ref refers to the Note model
         comment: {
             type: Schema.Types.ObjectId,

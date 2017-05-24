@@ -49,11 +49,15 @@ app.get("/scrape", function (req, res) {
                     if (up) throw up;
                 })
         });
-        articles.find().sort({'createdAt': -1}).limit(15).exec(function (up, doc) {
+        articles.find().limit(15).exec(function (up, doc) {
             if (up) throw up;
             else res.render('index', {articles: doc});
         });
     });
+});
+// SEND ALL BAD URL TO INDEX
+app.get('*', function(req, res){
+    res.redirect('/');
 });
 
 
