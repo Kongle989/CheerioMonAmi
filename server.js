@@ -28,7 +28,10 @@ db.once("open", function () {
 
 var url = "http://www.muscleandfitness.com/athletes-celebrities/news";
 app.get("/", function (req, res) {
-    res.render('index');
+    articles.find().sort({createdAt: 1}).exec(function (up, doc) {
+        if (up) throw up;
+        else res.render('index', {articles: doc});
+    });
 });
 app.get("/scrape", function (req, res) {
     request(url, function (error, response, html) {
@@ -40,7 +43,8 @@ app.get("/scrape", function (req, res) {
                 {title: title},
                 {
                     title: title,
-                    link: link
+                    link: link,
+                    createdAt: Date.now()
                 },
                 {
                     new: true,
@@ -49,12 +53,23 @@ app.get("/scrape", function (req, res) {
                     if (up) throw up;
                 })
         });
-        articles.find().limit(15).exec(function (up, doc) {
-            if (up) throw up;
-            else res.render('index', {articles: doc});
-        });
+        res.redirect('/')
     });
 });
+
+app.get('/save/:id', function (req, res) {
+
+});
+
+app.get('/delete/:id', function (req, res) {
+    articles.remove({_id: req.params.id}, function (up, doc) {
+        if (up) throw up;
+        else res.redirect('/');
+
+    })
+});
+
+
 // SEND ALL BAD URL TO INDEX
 app.get('*', function(req, res){
     res.redirect('/');

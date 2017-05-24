@@ -7,14 +7,14 @@
     {{#each articles}}
         <div class="articles">
 
-            <div class="innerArticle" data-id={{this._id}}>
+            <div class="innerArticle">
                 {{this.title}}<br>
                 <a href={{this.link}}>Read Article</a><br>
             </div>
             <div class="buttons">
-                <form method="post">
-                    <button class="save" formaction="/save"><span>Save</span></button>
-                    <button class="delete" formaction="/delete"><span>Delete</span></button>
+                <form method="get">
+                    <button class="save" formaction="/save/{{this._id}}"><span>Save</span></button>
+                    <button class="delete" formaction="/delete/{{this._id}}"><span>Delete</span></button>
                 </form>
             </div>
 
