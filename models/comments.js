@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
 // Create the Note schema
 var CommentSchema = new Schema({
     body: {
-        type: String
+        type: String,
     }
 });
 

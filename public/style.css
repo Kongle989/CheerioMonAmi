@@ -187,11 +187,11 @@ footer {
 
 /* Modal Content/Box */
 .modal-content {
+    display: inline-block;
     background-color: #fefefe;
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
 }
 
 /* The Close Button */
@@ -203,4 +203,26 @@ footer {
 
 .close:hover {
     color: black;
+}
+
+#commentForm {
+    display: block;
+    width: 90%;
+    text-align: left;
+    padding-left: 3px;
+}
+
+#addedComments {
+    overflow: auto;
+}
+
+.userComments  {
+    display: block;
+    float: left;
+    width: 50%;
+    border-style: solid;
+    border-width: 2px;
+    margin: 3px;
+    padding: 2px;
+    text-align: left;
 }
