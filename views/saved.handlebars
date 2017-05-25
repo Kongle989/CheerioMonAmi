@@ -1,0 +1,23 @@
+<h1>Saved Articles</h1>
+<div id="articles">
+    <form action="/" method="GET">
+        <button type="submit">Home</button>
+    </form>
+    {{#each articles}}
+        {{#if this.saved}}
+            <div class="articles">
+
+                <div class="innerArticle">
+                    {{this.title}}<br>
+                </div>
+                <div class="buttons">
+                    <form method="get">
+                        <button class="comment" formaction="/comment/{{this._id}}"><span>Comment</span></button>
+                        <button class="unsave" formaction="/unsave/{{this._id}}"><span>Unsave</span></button>
+                    </form>
+                </div>
+            </div>
+        {{/if}}
+    {{/each}}
+
+</div>

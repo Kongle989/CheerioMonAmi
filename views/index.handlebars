@@ -2,9 +2,10 @@
 <div id="articles">
     <form action="/scrape" method="GET">
         <button type="submit">Get Latest News</button>
+        <button type="submit" formaction="/saved">View Saved Articles</button>
     </form>
     {{#each articles}}
-        {{#unless articles.saved}}
+        {{#unless this.saved}}
             <div class="articles">
 
                 <div class="innerArticle">
@@ -14,7 +15,6 @@
                 <div class="buttons">
                     <form method="get">
                         <button class="save" formaction="/save/{{this._id}}"><span>Save</span></button>
-                        <button class="delete" formaction="/delete/{{this._id}}"><span>Delete</span></button>
                     </form>
                 </div>
             </div>

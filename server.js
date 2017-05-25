@@ -33,6 +33,14 @@ app.get("/", function (req, res) {
         else res.render('index', {articles: doc});
     });
 });
+
+app.get("/saved", function (req, res) {
+    articles.find().sort({createdAt: 1}).exec(function (up, doc) {
+        if (up) throw up;
+        else res.render('saved', {articles: doc});
+    });
+});
+
 app.get("/scrape", function (req, res) {
     request(url, function (error, response, html) {
         var $ = cheerio.load(html);
@@ -58,20 +66,26 @@ app.get("/scrape", function (req, res) {
 });
 
 app.get('/save/:id', function (req, res) {
-
+    articles.findByIdAndUpdate(req.params.id,
+        {saved: true}
+        , function (up, doc) {
+            if (up) throw up;
+            else res.redirect('/');
+        })
 });
 
-app.get('/delete/:id', function (req, res) {
-    articles.remove({_id: req.params.id}, function (up, doc) {
-        if (up) throw up;
-        else res.redirect('/');
-
-    })
+app.get('/unsave/:id', function (req, res) {
+    articles.findByIdAndUpdate(req.params.id,
+        {saved: false}
+        , function (up, doc) {
+            if (up) throw up;
+            else res.redirect('/saved');
+        })
 });
 
 
 // SEND ALL BAD URL TO INDEX
-app.get('*', function(req, res){
+app.get('*', function (req, res) {
     res.redirect('/');
 });
 

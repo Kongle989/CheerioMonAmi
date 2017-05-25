@@ -55,7 +55,7 @@ body {
     background-image: linear-gradient(to bottom, #bde9ff, #0099ff);
 }
 
-.delete {
+.unsave {
     background-image: -webkit-linear-gradient(top, #ff0000, #ffbfc2);
     background-image: -moz-linear-gradient(top, #ff0000, #ffbfc2);
     background-image: -ms-linear-gradient(top, #ff0000, #ffbfc2);
@@ -65,7 +65,7 @@ body {
     width: 54px;
 }
 
-.delete:hover {
+.unsave:hover {
     background-image: -webkit-linear-gradient(top, #ffbfc2, #ff0000);
     background-image: -moz-linear-gradient(top, #ffbfc2, #ff0000);
     background-image: -ms-linear-gradient(top, #ffbfc2, #ff0000);
@@ -109,7 +109,7 @@ footer {
     opacity: 1;
 }
 
-.delete span {
+.unsave span {
     -webkit-transition: 0.6s;
     -moz-transition: 0.6s;
     -o-transition: 0.6s;
@@ -120,13 +120,13 @@ footer {
     transition-delay: 0.2s;
 }
 
-.delete span:after {
+.unsave span:after {
     content: ' -';
     opacity: 0;
     transition: 0.5s;
     font-size: 1.5em;
 }
 
-.delete:hover span:after {
+.unsave:hover span:after {
     opacity: 1;
 }
