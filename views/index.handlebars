@@ -3,22 +3,22 @@
     <form action="/scrape" method="GET">
         <button type="submit">Get Latest News</button>
     </form>
-
     {{#each articles}}
-        <div class="articles">
+        {{#unless articles.saved}}
+            <div class="articles">
 
-            <div class="innerArticle">
-                {{this.title}}<br>
-                <a href={{this.link}}>Read Article</a><br>
+                <div class="innerArticle">
+                    {{this.title}}<br>
+                    <a href={{this.link}}>Read Article</a><br>
+                </div>
+                <div class="buttons">
+                    <form method="get">
+                        <button class="save" formaction="/save/{{this._id}}"><span>Save</span></button>
+                        <button class="delete" formaction="/delete/{{this._id}}"><span>Delete</span></button>
+                    </form>
+                </div>
             </div>
-            <div class="buttons">
-                <form method="get">
-                    <button class="save" formaction="/save/{{this._id}}"><span>Save</span></button>
-                    <button class="delete" formaction="/delete/{{this._id}}"><span>Delete</span></button>
-                </form>
-            </div>
-
-        </div>
+        {{/unless}}
     {{/each}}
 
 </div>

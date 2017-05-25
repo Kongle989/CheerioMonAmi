@@ -4,6 +4,7 @@ var mongoose = require("mongoose"),
     ArticleSchema = new Schema({
         title: {
             type: String,
+            unique: true,
             required: true
         },
         link: {
@@ -11,7 +12,14 @@ var mongoose = require("mongoose"),
             required: true
         },
         createdAt: {
-            type: Date
+            type: Date,
+            default: Date.now,
+            required: true
+        },
+        saved: {
+            type: Boolean,
+            default: false,
+            required: true
         },
         // This only saves one note's ObjectId, ref refers to the Note model
         comment: {

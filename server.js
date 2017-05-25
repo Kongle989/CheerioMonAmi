@@ -44,11 +44,11 @@ app.get("/scrape", function (req, res) {
                 {
                     title: title,
                     link: link,
-                    createdAt: Date.now()
                 },
                 {
                     new: true,
-                    upsert: true
+                    upsert: true,
+                    setDefaultsOnInsert: true
                 }, function (up, doc) {
                     if (up) throw up;
                 })
