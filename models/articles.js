@@ -21,11 +21,10 @@ var mongoose = require("mongoose"),
             default: false,
             required: true
         },
-        // This only saves one note's ObjectId, ref refers to the Note model
-        comment: {
+        comment: [{
             type: Schema.Types.ObjectId,
             ref: "Comment"
-        }
+        }]
     });
 
 var Article = mongoose.model("Article", ArticleSchema);

@@ -83,6 +83,42 @@ app.get('/unsave/:id', function (req, res) {
         })
 });
 
+app.post('/addComment/:id', function (req, res) {
+    var newComment = new comments({
+        body: req.body.comment
+    });
+    newComment.save(function (up, doc) {
+        if (up) throw up;
+        else {
+            console.log(
+                'this doc', doc
+            );
+            articles.findByIdAndUpdate(req.params.id,
+                {
+                    $push: {
+                        'comment': doc._id
+                    }
+                }, {new: true}, function (up, newdoc) {
+                    if (up) throw up;
+                    else {
+                        res.redirect('/saved');
+                    }
+                })
+        }
+    })
+});
+
+app.get('/getComment/:id', function (req, res) {
+    articles.findById(req.params.id)
+        .populate('comment')
+        .exec(function (up, doc) {
+            console.log(doc);
+            if (up) throw up;
+            else res.send(doc);
+        })
+});
+
+
 // SEND ALL BAD URL TO INDEX
 app.get('*', function (req, res) {
     res.redirect('/');

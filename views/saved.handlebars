@@ -12,9 +12,10 @@
                 </div>
                 <div class="buttons">
 
-                    <form>
-                        <button id="myBtn" class="comment" onclick="false"><span>Comment</span></button>
-                        <button class="unsave" formaction="/unsave/{{this._id}}" formmethod="get"><span>Unsave</span>
+                    <form method="get">
+                        <button id="myBtn" class="comment" formaction="/comment" data-id={{this._id}}>
+                            <span>Comment</span></button>
+                        <button class="unsave" formaction="/unsave/{{this._id}}"><span>Unsave</span>
                         </button>
                     </form>
                 </div>
@@ -30,8 +31,12 @@
 
     <!-- Modal content -->
     <div class="modal-content">
-        <span class="close">&times;</span>
+        <button class="close">&times;</button>
         <p>Some text in the Modal..</p>
+        <form method="post">
+            <input type="text" name="comment">
+            <button id="addComment" class="addComment">Add Comment</button>
+        </form>
     </div>
 
 </div>
@@ -47,6 +52,12 @@
     btn.onclick = function () {
         event.preventDefault();
         modal.style.display = "block";
+        document.getElementById('addComment').setAttribute('formaction', '/addComment/' + this.getAttribute('data-id'));
+        $.ajax(
+                {url: '/getComment/' + this.getAttribute('data-id')}, function (data) {
+
+                }
+        )
     };
 
     // When the user clicks on <span> (x), close the modal
