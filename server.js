@@ -76,10 +76,16 @@ app.get('/save/:id', function (req, res) {
 // UNSAVE AN ARTICLE
 app.get('/unsave/:id', function (req, res) {
     articles.findByIdAndUpdate(req.params.id,
-        {saved: false}
+        {
+            saved: false,
+            comment: []
+        }
         , function (up, doc) {
-            if (up) throw up;
-            else res.redirect('/saved');
+            comments.remove({_id: doc.comment}, function (up, doc) {
+                if (up) throw up;
+                else res.redirect('/saved');
+            });
+
         })
 });
 // ADD COMMENT
@@ -109,7 +115,6 @@ app.get('/getComment/:id', function (req, res) {
     articles.findById(req.params.id)
         .populate('comment')
         .exec(function (up, doc) {
-            console.log(doc);
             if (up) throw up;
             else res.send(doc);
         })

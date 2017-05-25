@@ -26,7 +26,6 @@ var mongoose = require("mongoose"),
             ref: "Comment"
         }]
     });
-
 var Article = mongoose.model("Article", ArticleSchema);
 
 // Export the model
