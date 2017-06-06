@@ -17,7 +17,8 @@ mongoose.Promise = Promise;
 app.engine("handlebars", exphbs({defaultLayout: "main"}));
 app.set("view engine", "handlebars");
 app.use(express.static("public"));
-mongoose.connect("mongodb://localhost/cheeriomonami");
+//mongoose.connect("mongodb://localhost/cheeriomonami");
+mongoose.connect('mongodb://heroku_wbpscx3p:a08vkh3gdbab77ut0s2hb1qh0d@ds051960.mlab.com:51960/heroku_wbpscx3p');
 var db = mongoose.connection;
 db.on("error", function (error) {
     console.log("Mongoose Error: ", error);
@@ -127,5 +128,3 @@ app.get('*', function (req, res) {
 app.listen(port, function () {
     console.log("App running on port " + port);
 });
-
-mongoose.connect('mongodb://heroku_wbpscx3p:a08vkh3gdbab77ut0s2hb1qh0d@ds051960.mlab.com:51960/heroku_wbpscx3p');
