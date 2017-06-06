@@ -128,4 +128,4 @@ app.listen(port, function () {
     console.log("App running on port " + port);
 });
 
-mongoose.connect('heroku_wbpscx3p:a08vkh3gdbab77ut0s2hb1qh0d@ds051960.mlab.com:51960/heroku_wbpscx3p');
+mongoose.connect('mongodb://heroku_wbpscx3p:a08vkh3gdbab77ut0s2hb1qh0d@ds051960.mlab.com:51960/heroku_wbpscx3p');
