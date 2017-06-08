@@ -211,6 +211,7 @@ footer {
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
+    max-width: 80%;
 }
 
 /* The Close Button */
@@ -239,10 +240,23 @@ footer {
     display: block;
     float: left;
     width: 80%;
+    max-height: 50px;
     border-style: solid;
     border-width: 2px;
     margin: 3px;
     padding: 2px;
     text-align: left;
     overflow: auto;
+}
+
+.innerComment {
+    width: 80%;
+    max-height: 50px;
+    float: left;
+    overflow: auto;
+}
+
+.deleteButton {
+    display: block;
+    float: right;
 }
