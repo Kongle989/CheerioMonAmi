@@ -244,4 +244,5 @@ footer {
     margin: 3px;
     padding: 2px;
     text-align: left;
+    overflow: auto;
 }
