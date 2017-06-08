@@ -239,7 +239,7 @@ footer {
 .userComments  {
     display: block;
     float: left;
-    width: 80%;
+    width: 100%;
     max-height: 50px;
     border-style: solid;
     border-width: 2px;
