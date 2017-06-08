@@ -9,16 +9,21 @@ var express = require("express"),
     request = require("request"),
     cheerio = require("cheerio"),
     exphbs = require("express-handlebars"),
-    app = express(),
-    port = 3000;
+    app = express();
 app.use(logger("dev"));
 app.use(bodyParser.urlencoded({extended: false}));
 mongoose.Promise = Promise;
 app.engine("handlebars", exphbs({defaultLayout: "main"}));
 app.set("view engine", "handlebars");
 app.use(express.static("public"));
-//mongoose.connect("mongodb://localhost/cheeriomonami");
-mongoose.connect('mongodb://heroku_wbpscx3p:a08vkh3gdbab77ut0s2hb1qh0d@ds051960.mlab.com:51960/heroku_wbpscx3p');
+if(process.env.MONGODB_URI)
+{
+    mongoose.connect('mongodb://heroku_wbpscx3p:a08vkh3gdbab77ut0s2hb1qh0d@ds051960.mlab.com:51960/heroku_wbpscx3p');
+}
+else
+{
+    mongoose.connect("mongodb://localhost/cheeriomonami");
+}
 var db = mongoose.connection;
 db.on("error", function (error) {
     console.log("Mongoose Error: ", error);
@@ -125,6 +130,6 @@ app.get('*', function (req, res) {
     res.redirect('/');
 });
 
-app.listen(port, function () {
+app.listen(process.env.PORT || 3000, function () {
     console.log("App running on port " + port);
 });
