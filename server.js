@@ -16,14 +16,8 @@ mongoose.Promise = Promise;
 app.engine("handlebars", exphbs({defaultLayout: "main"}));
 app.set("view engine", "handlebars");
 app.use(express.static("public"));
-if(process.env.MONGODB_URI)
-{
-    mongoose.connect('mongodb://heroku_wbpscx3p:a08vkh3gdbab77ut0s2hb1qh0d@ds051960.mlab.com:51960/heroku_wbpscx3p');
-}
-else
-{
-    mongoose.connect("mongodb://localhost/cheeriomonami");
-}
+if (process.env.MONGODB_URI) mongoose.connect('mongodb://heroku_wbpscx3p:a08vkh3gdbab77ut0s2hb1qh0d@ds051960.mlab.com:51960/heroku_wbpscx3p');
+else mongoose.connect("mongodb://localhost/cheeriomonami");
 var db = mongoose.connection;
 db.on("error", function (error) {
     console.log("Mongoose Error: ", error);
@@ -83,9 +77,8 @@ app.get('/save/:id', function (req, res) {
 app.get('/unsave/:id', function (req, res) {
     articles.findByIdAndUpdate(req.params.id,
         {
-            saved: false,
-            comment: []
-        }
+            saved: false
+        }, {$unset: {comment: ""}}
         , function (up, doc) {
             comments.remove({_id: doc.comment}, function (up, doc) {
                 if (up) throw up;
@@ -124,6 +117,20 @@ app.get('/getComment/:id', function (req, res) {
             if (up) throw up;
             else res.send(doc);
         })
+});
+// DELETE COMMENT
+app.get('/deleteComment/:id', function (req, res) {
+    comments.findByIdAndRemove(req.params.id).exec(function (up, doc) {
+        if (up) throw up;
+        else {
+            articles.update({
+                comment: doc._id
+            }, {$pull: {comment: [doc._id]}}).exec(function (up, doc) {
+                if (up) throw up;
+                else res.redirect('/saved');
+            })
+        }
+    })
 });
 // SEND ALL BAD URL TO INDEX
 app.get('*', function (req, res) {
